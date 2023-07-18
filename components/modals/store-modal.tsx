@@ -2,8 +2,11 @@
 
 import * as z from "zod";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { Modal } from "@/components/ui/modal";
@@ -25,6 +28,8 @@ const formSchema = z.object({
 export const StoreModal = () => {
     const storeModal = useStoreModal();
 
+    const [loading, setLoading] = useState(false);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -33,8 +38,16 @@ export const StoreModal = () => {
     });
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-        // TODO: Create Store 
+        try {
+            setLoading(true);
+            const response = await axios.post('/api/stores', values);
+
+            toast.success("Store created.");
+        } catch (error) {
+            toast.error("Something went wrong.");
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -55,6 +68,7 @@ export const StoreModal = () => {
                                         <FormLabel>Name</FormLabel>
                                         <FormControl>
                                             <Input
+                                                disabled={loading}
                                                 placeholder="E-commerce"
                                                 {...field} />
                                         </FormControl>
@@ -70,10 +84,12 @@ export const StoreModal = () => {
                                 w-full"
                             >
                                 <Button
+                                    disabled={loading}
                                     variant="outline"
                                     onClick={storeModal.onClose}
                                 >Cancel</Button>
                                 <Button
+                                    disabled={loading}
                                     type="submit"
                                 >Continue</Button>
                             </div>
