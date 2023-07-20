@@ -28,7 +28,6 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
                     items-center
                     justify-between"
             >
-                {/* TODO: Make Billboards Count dynamic */}
                 <Heading
                     title={`Billboards (${data.length})`}
                     description="Manage billboards for your store"

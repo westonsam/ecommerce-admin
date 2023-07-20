@@ -29,7 +29,6 @@ export const CategoryClient: React.FC<CategoryClientProps> = ({
                     items-center
                     justify-between"
             >
-                {/* TODO: Make Categories Count dynamic */}
                 <Heading
                     title={`Categories (${data.length})`}
                     description="Manage categories for your store"
