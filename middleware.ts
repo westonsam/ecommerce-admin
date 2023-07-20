@@ -1,7 +1,9 @@
 import { authMiddleware } from "@clerk/nextjs";
 
-// This protects all routes including api/trpc routes
-export default authMiddleware({});
+export default authMiddleware({
+  // allows public api routes to be accessed without authorization
+  publicRoutes: ["/api/:path*"]
+});
 
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
