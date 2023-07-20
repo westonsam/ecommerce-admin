@@ -1,10 +1,29 @@
+import prismadb from "@/lib/prismadb";
+import { format } from "date-fns";
+
 import { BillboardClient } from "./componenets/client";
+import { BillboardColumn } from "./componenets/columns";
 
-interface BillboardsPageProps {
+const BillboardsPage = async ({
+    params
+}: {
+    params: { storeId: string }
+}) => {
+    const billboards = await prismadb.billboard.findMany({
+        where: {
+            storeId: params.storeId
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+    });
 
-}
+    const formattedBillboards: BillboardColumn[] = billboards.map((item) => ({
+        id: item.id,
+        label: item.label,
+        createdAt: format(item.createdAt, "MMMM do, yyyy")
+    }));
 
-const BillboardsPage: React.FC<BillboardsPageProps> = () => {
     return ( 
         <div className="flex-col">
             <div
@@ -14,7 +33,7 @@ const BillboardsPage: React.FC<BillboardsPageProps> = () => {
             p-8
             pt-6"
             >
-                <BillboardClient />
+                <BillboardClient data={formattedBillboards}/>
             </div>
         </div>
      );
