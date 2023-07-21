@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center py-4">
-        {/* TODO: add the ability to search by Billboard ID */}
+        {/* TODO: add the ability to search by ID */}
         <Input
           placeholder="Search"
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
