@@ -29,7 +29,7 @@ export const ProductClient: React.FC<ProductClientProps> = ({
                     justify-between"
             >
                 <Heading
-                    title={`Billboards (${data.length})`}
+                    title={`Products (${data.length})`}
                     description="Manage products for your store"
                 />
                 <Button
